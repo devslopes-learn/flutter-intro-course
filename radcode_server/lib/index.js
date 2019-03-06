@@ -11,7 +11,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/posts', function (req, res) {
-    res.send(_database.posts);
+    console.log('Sending Posts');
+    setTimeout(function () {
+        res.send(_database.posts);
+    }, 2000);
+});
+
+app.get('/user', function (req, res) {
+    res.send(_database.users[0]);
 });
 
 app.listen(PORT, function () {

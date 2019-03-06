@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var posts = exports.posts = [{
-    title: 'iOS 12 animation tutorial by Mark Wahlbeck',
+    title: 'iOS 13 animation tutorial by Mark Wahlbeck',
     url: 'https://devslopes.com',
     tags: ['iOS', 'mobile', 'animation']
 }, {

@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:radcode_dev/model/user.dart';
 import 'post_card.dart';
-import 'package:scoped_model/scoped_model.dart';
+import 'package:radcode_dev/model/post.dart';
 
-class PostList extends StatefulWidget {
+class PostList extends StatelessWidget {
+  PostList() : super();
+
   @override
-  PostListState createState() => new PostListState();
-}
-class PostListState extends State<PostList> {
-@override
   Widget build(BuildContext context) {
-   return ScopedModelDescendant<User>(
-     builder: (context, child, user) {
-       return Expanded(
-         child: ListView.builder(
+    return FutureBuilder<List<Post>>(
+        future: Post.fetchPosts(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Expanded(
+              child: ListView.builder(
               padding: const EdgeInsets.all(16.0),
               itemBuilder: (BuildContext _context, int i) {
-                if (i < user.posts.length) {
-                  return buildPostCard(user.posts[i]);
+                if (i < snapshot.data.length) {
+                  return buildPostCard(snapshot.data[i]);
                 }
               },
-            ),
-       );
-     },
-   );
+            ));
+          } else if (snapshot.hasError) {
+            //Show error Widget
+            throw Exception(snapshot.error);
+          } else {
+            // Not done loading, show spinner
+            return Container(
+              padding: EdgeInsets.all(15),
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 }
-

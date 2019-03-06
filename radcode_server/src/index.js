@@ -8,7 +8,11 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.get('/posts', (req, res) => {
-    res.send(posts);
+    console.log('Sending Posts');
+    setTimeout(() => {
+        res.send(posts);
+    }, 2000)
+    
 })
 
 app.get('/user', (req, res) => {
